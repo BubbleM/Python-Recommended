@@ -16,6 +16,34 @@ users = {"Angelica": {"Blues Traveler": 3.5, "Broken Bells": 2.0, "Norah Jones":
          		 		"The Strokes": 3.0}
         } # 用字典形式保存数据
 
-print(users["Veronica"]); # 获取某个用户的评分  *********************会发现每次输出的顺序都不一样
+#print(users["Veronica"]); # 获取某个用户的评分  *********************会发现每次输出的顺序都不一样
+
+#计算曼哈顿距离
+def manhattan(rating1,rating2):
+	distance = 0;
+	for key in rating1:
+		if key in rating2: # 找到共同评分的乐队
+			distance += abs(rating1[key] - rating2[key])
+	return distance
+
+#print(manhattan(users["Hailey"],users["Veronica"])) 
+# 输出2.0 
 
 
+#编写函数来找到距离最近的用户（返回一个用户列表，按距离排序）
+def computeNearestNeighbor(username,users):
+	"""计算所有用户至unername用户的距离，倒序排列并返回结果列表"""
+	distances = []
+	for user in users:
+		if user != username:
+			distance = manhattan(users[user],users[username])
+			distances.append((distance,user))
+	# 按距离排序——距离近的排在前面
+	distances.sort()
+	return distances
+
+print(computeNearestNeighbor("Hailey",users))
+""" 
+[(2.0, 'Veronica'), (4.0, 'Chan'), (4.0, 'Sam'), (4.5, 'Dan'), (5.0, 'Angelica'), 
+(5.5, 'Bill'), (7.5, 'Jordyn')]
+"""
